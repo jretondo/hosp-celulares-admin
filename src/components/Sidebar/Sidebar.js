@@ -168,7 +168,7 @@ class Sidebar extends React.Component {
             {/* Brand */}
             {logo ? (
               <NavbarBrand className="pt-0" {...navbarBrandProps}>
-                <img alt="..." src={Brand2} style={{ width: "100px", height: "70px" }} />
+                <img alt="..." src={Brand2} style={{ width: "100%", height: "70px" }} />
               </NavbarBrand>
             ) : null}
             {/* User */}
