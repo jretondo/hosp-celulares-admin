@@ -30,7 +30,7 @@ class Login extends React.Component {
             <Row className="align-items-center justify-content-xl-between">
               <Col xl="12" style={{ textAlign: "center" }}>
                 <div className="copyright text-center  text-muted">
-                  © {moment(new Date()).format("YYYY")}{" "}{" Club de la Bebida - Un producto de "}
+                  © {moment(new Date()).format("YYYY")}{" "}{" Hospital Para Celulares - Un producto de "}
                   <a
                     className="font-weight-bold ml-1"
                     href="https://nekonet.com.ar"

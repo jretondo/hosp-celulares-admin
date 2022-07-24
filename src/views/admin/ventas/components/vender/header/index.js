@@ -45,10 +45,29 @@ const InvoiceHeader = ({
     setModal1,
     modal1
 }) => {
+    const typesFact = [
+        {
+            word: "X",
+            tfact: 0
+        },
+        {
+            word: "A",
+            tfact: 1
+        },
+        {
+            word: "B",
+            tfact: 6
+        },
+        {
+            word: "C",
+            tfact: 11
+        }
+    ]
     const [ptoVtaList, setPtoVtaList] = useState(<option>No hay puntos de venta relacionados</option>)
     const [cbteStr, setCbteStr] = useState("")
     const [cuitSearchModal, setCuitSearchModal] = useState(false)
     const [nroCbte, setNroCbte] = useState(0)
+    const [listTFact, setListTFact] = useState(<></>)
 
     const FormatearNroCte = useCallback(async () => {
         const cbte = await CompleteCerosLeft(nroCbte, 8)
@@ -76,6 +95,7 @@ const InvoiceHeader = ({
             .then(res => {
                 const response = res.data
                 const status = response.status
+                console.log('response :>> ', response.body.lastInvoice);
                 if (status === 200) {
                     setNroCbte(parseInt(response.body.lastInvoice) + 1)
                 } else {
@@ -87,6 +107,33 @@ const InvoiceHeader = ({
             })
     }, [ptoVta.id, factFiscBool, tfact])
 
+    const optionsTfact = useCallback(() => {
+
+        if (parseInt(factFiscBool) === 1) {
+            if (ptoVta.cond_iva === 0) {
+                setTfact(0)
+            } else if (ptoVta.cond_iva === 1) {
+                setTfact(1)
+            } else {
+                setTfact(11)
+            }
+        } else {
+            setTfact(0)
+        }
+        setListTFact(
+            parseInt(factFiscBool) === 1 ?
+                ptoVta.cond_iva === 0 ?
+                    <option value={0}>X</option> :
+                    ptoVta.cond_iva === 1 ?
+                        <>
+                            <option value={1}>A</option>
+                            <option value={6}>B</option>
+                        </> :
+                        <option value={11}>C</option> :
+                <option value={0}>X</option>
+        )
+    }, [ptoVta.cond_iva, factFiscBool])
+
 
     useEffect(() => {
         lastInvoice()
@@ -95,6 +142,10 @@ const InvoiceHeader = ({
     useEffect(() => {
         FormatearNroCte()
     }, [nroCbte, ptoVta, FormatearNroCte])
+
+    useEffect(() => {
+        optionsTfact()
+    }, [ptoVta.cond_iva, factFiscBool, optionsTfact])
 
     return (
         <>
@@ -147,20 +198,7 @@ const InvoiceHeader = ({
                                         <FormGroup>
                                             <Label for="factFiscTxt">T. Fact.</Label>
                                             <Input type="select" id="factFiscTxt" value={tfact} onChange={e => setTfact(e.target.value)} >
-                                                {
-                                                    parseInt(factFiscBool) === 1 ?
-                                                        ptoVta.cond_iva === 0 ?
-                                                            <option value={0}>X</option> :
-                                                            ptoVta.cond_iva === 1 ?
-                                                                <>
-                                                                    <option value={1}>A</option>
-                                                                    <option value={6}>B</option>
-                                                                </> :
-                                                                <option value={11}>C</option> :
-                                                        <option value={0}>X</option>
-                                                }
-
-
+                                                {listTFact}
                                             </Input>
                                         </FormGroup>
                                     </Col>
