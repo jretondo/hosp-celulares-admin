@@ -11,6 +11,7 @@ import ButtonOpenCollapse from '../../../components/buttonOpen';
 import { useWindowSize } from '../../../Hooks/UseWindowSize';
 import axios from 'axios';
 import InfoAfipMod from './components/vender/infoAfip';
+import CustomSell from './components/customSell';
 
 const VentasModule = () => {
     const [call, setCall] = useState(false)
@@ -32,6 +33,9 @@ const VentasModule = () => {
     }
     const activeCajaLista = () => {
         setModuleActive(2)
+    }
+    const activeCustomSell = () => {
+        setModuleActive(3)
     }
 
     const getDummy = async () => {
@@ -129,6 +133,11 @@ const VentasModule = () => {
                                         tittle={"Consulta de Ventas"}
                                         active={moduleActive === 1 ? true : false}
                                     />
+                                    <ButtonOpenCollapse
+                                        action={activeCustomSell}
+                                        tittle={"Factura Libre"}
+                                        active={moduleActive === 3 ? true : false}
+                                    />
                                 </ButtonGroup>
                             </CardBody>
                         </Card>
@@ -149,6 +158,11 @@ const VentasModule = () => {
 
                         <Collapse isOpen={moduleActive === 1 ? true : false} >
                             <ConsultaVentasModule />
+                        </Collapse>
+                        <Collapse isOpen={moduleActive === 3 ? true : false} >
+                            <CustomSell
+                                setValidPV={setValidPV}
+                            />
                         </Collapse>
                     </div>
                 </Container>
