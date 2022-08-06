@@ -82,29 +82,55 @@ const InvoiceHeader = ({
     const lastInvoice = useCallback(async () => {
         console.log('factFiscBool :>> ', factFiscBool);
         let fiscalBool = "true"
+        let tipoFact = tfact
         if (parseInt(factFiscBool) === 0) {
             fiscalBool = ""
-        }
-        let query = `?pvId=${ptoVta.id}&fiscal=${fiscalBool}&tipo=${tfact}&entorno=`
+            tipoFact = 0
 
-        await axios.get(UrlNodeServer.invoicesDir.sub.last + query, {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('user-token')
-            }
-        })
-            .then(res => {
-                const response = res.data
-                const status = response.status
-                console.log('response :>> ', response.body.lastInvoice);
-                if (status === 200) {
-                    setNroCbte(parseInt(response.body.lastInvoice) + 1)
-                } else {
-                    setNroCbte(1)
+            let query = `?pvId=${ptoVta.id}&fiscal=${fiscalBool}&tipo=${tfact}&entorno=`
+
+            await axios.get(UrlNodeServer.invoicesDir.sub.last + query, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('user-token')
                 }
             })
-            .catch(() => {
-                setNroCbte(1)
-            })
+                .then(res => {
+                    const response = res.data
+                    const status = response.status
+                    console.log('response :>> ', response.body.lastInvoice);
+                    if (status === 200) {
+                        setNroCbte(parseInt(response.body.lastInvoice) + 1)
+                    } else {
+                        setNroCbte(1)
+                    }
+                })
+                .catch(() => {
+                    setNroCbte(1)
+                })
+        } else {
+            if (tfact !== 0) {
+                let query = `?pvId=${ptoVta.id}&fiscal=${fiscalBool}&tipo=${tfact}&entorno=`
+
+                await axios.get(UrlNodeServer.invoicesDir.sub.last + query, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('user-token')
+                    }
+                })
+                    .then(res => {
+                        const response = res.data
+                        const status = response.status
+                        console.log('response :>> ', response.body.lastInvoice);
+                        if (status === 200) {
+                            setNroCbte(parseInt(response.body.lastInvoice) + 1)
+                        } else {
+                            setNroCbte(1)
+                        }
+                    })
+                    .catch(() => {
+                        setNroCbte(1)
+                    })
+            }
+        }
     }, [ptoVta.id, factFiscBool, tfact])
 
     const optionsTfact = useCallback(() => {
