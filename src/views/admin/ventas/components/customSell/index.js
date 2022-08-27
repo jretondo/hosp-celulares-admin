@@ -44,13 +44,14 @@ const CustomSell = ({
     const [tfact, setTfact] = useState(1)
     const [condIvaCli, setCondIvaCli] = useState(0)
     const [processing, setProcessing] = useState(false)
-    const [descuentoPerc, setDescuentoPer] = useState(0)
     const [variosPagos, setVariosPagos] = useState([])
     const [total, setTotal] = useState(0)
 
     const [modal1, setModal1] = useState(false)
 
     const [detCustom, setDetCustom] = useState("")
+
+    const [alicuota, setAlicuota] = useState(5)
 
     const { totalPrecio, cancelarCompra, productsSellList } = useContext(productsSellContext)
 
@@ -88,7 +89,8 @@ const CustomSell = ({
                 variosPagos: variosPagos,
                 custom: true,
                 total_fact: total,
-                custom_detail: detCustom
+                custom_detail: detCustom,
+                alicuota: parseInt(alicuota)
             },
             fiscal: factFiscBool
         }
@@ -142,7 +144,6 @@ const CustomSell = ({
             var blob = new Blob([res.data], { type: "application/pdf" });
             FileSaver.saveAs(blob, filename);
             cancelarCompra()
-            setDescuentoPer(0)
             setFormaPago(0)
             setFactFiscBool(0)
             setNdoc("")
@@ -241,6 +242,25 @@ const CustomSell = ({
                                     />
                                 </Col>
                                 <Col md="6">
+                                    <Row style={{ marginTop: 0 }}>
+                                        <Col md="4" style={{ marginLeft: "auto", textAlign: "right" }}>
+                                            <Label style={{ fontSize: "25px", fontWeight: "bold" }} >
+                                                Alicuota de IVA:
+                                            </Label>
+                                        </Col>
+                                        <Col md="8" >
+                                            <FormGroup>
+                                                <Input style={{ fontSize: "20px", fontWeight: "bold", textAlign: "right" }} type="select" value={alicuota} onChange={e => setAlicuota(e.target.value)} >
+                                                    <option value={3}>0,00%</option>
+                                                    <option value={4}>10,50%</option>
+                                                    <option value={5}>21,00%</option>
+                                                    <option value={6}>27,00%</option>
+                                                    <option value={8}>5,00%</option>
+                                                    <option value={9}>2,50%</option>
+                                                </Input>
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
                                     <Row style={{ marginTop: 0 }}>
                                         <Col md="4" style={{ marginLeft: "auto", textAlign: "right" }}>
                                             <Label style={{ fontSize: "25px", fontWeight: "bold" }} >
