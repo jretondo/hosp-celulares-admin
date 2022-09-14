@@ -46,6 +46,7 @@ const CustomSell = ({
     const [processing, setProcessing] = useState(false)
     const [variosPagos, setVariosPagos] = useState([])
     const [total, setTotal] = useState(0)
+    const [totalMediosPago, setTotalMediosPago] = useState(0)
 
     const [modal1, setModal1] = useState(false)
 
@@ -94,7 +95,7 @@ const CustomSell = ({
             },
             fiscal: factFiscBool
         }
-        if (parseInt(formaPago) === 5 && parseFloat(total) !== parseFloat(totalPrecio)) {
+        if (parseInt(formaPago) === 5 && parseFloat(total) !== parseFloat(totalMediosPago)) {
             swal("Error: Total del pago!", "Revise que el total del pago debe ser igual al total de la factura.", "error");
         } else {
             if (totalPrecio > 15795 && parseInt(clienteBool) === 0 && parseInt(factFiscBool) === 1) {
@@ -237,8 +238,8 @@ const CustomSell = ({
                                         variosPagos={variosPagos}
                                         setVariosPagos={setVariosPagos}
                                         factFiscBool={factFiscBool}
-                                        total={total}
-                                        setTotal={setTotal}
+                                        total={totalMediosPago}
+                                        setTotal={setTotalMediosPago}
                                     />
                                 </Col>
                                 <Col md="6">
