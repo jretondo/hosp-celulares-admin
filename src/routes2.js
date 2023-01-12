@@ -5,7 +5,10 @@ import Clientes from 'views/admin/clientes'
 import PuntosVenta from 'views/admin/puntoVenta'
 import Ventas from 'views/admin/ventas'
 import UserAdmin from 'views/admin/userAdmin'
-import Stock from 'views/admin/stock';
+import Stock from 'views/admin/stock'
+import Franchise from 'views/admin/franquicias'
+import Repairs from 'views/admin/reparaciones'
+import Replacement from 'views/admin/repuestos'
 
 var routes = [
   {
@@ -68,6 +71,30 @@ var routes = [
     component: UserAdmin,
     layout: process.env.PUBLIC_URL + "/admin",
     id: 8
+  },
+  {
+    path: "/franquicias",
+    name: "Administración de Franquicias",
+    icon: "ni ni-building text-green",
+    component: Franchise,
+    layout: process.env.PUBLIC_URL + "/admin",
+    id: 10
+  },
+  {
+    path: "/reparaciones",
+    name: "Reparaciones de Equipos",
+    icon: "ni ni-watch-time text-red",
+    component: Repairs,
+    layout: process.env.PUBLIC_URL + "/admin",
+    id: 11
+  },
+  {
+    path: "/repuestos",
+    name: "Control de Repuestos",
+    icon: "ni ni-settings-gear-65 text-teal",
+    component: Replacement,
+    layout: process.env.PUBLIC_URL + "/admin",
+    id: 12
   }
 ];
 export default routes;

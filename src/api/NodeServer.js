@@ -5,8 +5,8 @@ let publicFiles = ""
 const local = 1
 if (process.env.NODE_ENV === "development") {
     if (local === 1) {
-        host = "http://192.168.0.11:3014/api"
-        publicFiles = "http://192.168.0.11:3014/static"
+        host = "http://localhost:3014/api"
+        publicFiles = "http://localhost:3014/static"
     } else {
         host = "https://api-test.nekoadmin.com.ar/hpc/api"
         publicFiles = "https://api-test.nekoadmin.com.ar/hpc/static"
@@ -34,6 +34,8 @@ const transportistas = host + "/transportistas"
 const usuarios = host + "/user"
 const stock = host + "/stock"
 const invoices = host + "/invoices"
+const franchises = host + "/franchises"
+const repairs = host + "/repairs"
 
 const authDir = {
     auth
@@ -136,6 +138,22 @@ const invoicesDir = {
     }
 }
 
+const franchisesDir = {
+    franchises,
+    sub: {
+        details: franchises + "/details",
+        pass: franchises + "/pass",
+        obs: franchises + "/obs"
+    }
+}
+
+const repairsDir = {
+    repairs,
+    sub: {
+        details: repairs + "/details"
+    }
+}
+
 const routesDir = {
     routes,
     sub: {
@@ -148,7 +166,10 @@ const routesDir = {
         revendedores: routes + "/revendedores",
         stock: routes + "/stock",
         transportistas: routes + "/transportistas",
-        userAdmin: routes + "/userAdmin"
+        userAdmin: routes + "/userAdmin",
+        franquicias: routes + "/franquicias",
+        reparaciones: routes + "/reparaciones",
+        repuestos: routes + "/repuestos"
     }
 }
 
@@ -165,7 +186,9 @@ const UrlNodeServer = {
     transportistasDir,
     usuariosDir,
     stockDir,
-    invoicesDir
+    invoicesDir,
+    franchisesDir,
+    repairsDir
 }
 
 export default UrlNodeServer

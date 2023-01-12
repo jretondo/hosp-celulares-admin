@@ -3,7 +3,7 @@ import {
     Table
 } from "reactstrap"
 
-const ListadoTable = ({ listado, titulos }) => {
+const ListadoTable = ({ children, titulos }) => {
 
     return (
         <Table className="align-items-center table-flush" responsive>
@@ -20,7 +20,7 @@ const ListadoTable = ({ listado, titulos }) => {
             </thead>
             <tbody style={{ minHeight: "500px" }}  >
                 {
-                    listado
+                    children
                 }
             </tbody>
         </Table>
