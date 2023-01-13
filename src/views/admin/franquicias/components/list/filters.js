@@ -12,21 +12,26 @@ const FranchiseFilter = ({ searchText, setSearchText, trigger }) => {
         <>
             <Row>
                 <Col md="12">
-                    <Form onSubmit={(e) => FilterFranchises(e)}>
-                        <FormGroup>
-                            <Label>
-                                Buscar franquicia
-                            </Label>
-                            <InputGroup>
-                                <Input value={searchText} onChange={e => setSearchText(e.target.value)} placeHolder="Nombre, dirección, usuario..." />
-                                <InputGroupAddon addonType="append">
-                                    <Button color="primary" type="submit">
-                                        Buscar
-                                    </Button>
-                                </InputGroupAddon>
-                            </InputGroup>
-                        </FormGroup>
-                    </Form>
+                    <FormGroup>
+                        <Label>
+                            Buscar franquicia
+                        </Label>
+                        <InputGroup>
+                            <Input value={searchText} onChange={e => setSearchText(e.target.value)} placeHolder="Nombre, dirección, usuario..." onKeyDown={e => {
+                                if (e.keyCode === 13) {
+                                    FilterFranchises(e)
+                                }
+                            }
+                            } />
+                            <InputGroupAddon addonType="append">
+                                <Button color="primary" onClick={e => {
+                                    FilterFranchises(e)
+                                }}>
+                                    Buscar
+                                </Button>
+                            </InputGroupAddon>
+                        </InputGroup>
+                    </FormGroup>
                 </Col>
             </Row>
         </>

@@ -1,9 +1,9 @@
-import UrlNodeServer from 'api/NodeServer';
+import UrlNodeServer from '../../../../../../api/NodeServer';
 import axios from 'axios';
 import ListadoTable from 'components/subComponents/Listados/ListadoTable2';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row, Spinner } from 'reactstrap';
-import FranchiseFilter from 'views/admin/franquicias/components/list/filters';
+import FranchiseFilter from '../../../../franquicias/components/list/filters';
 import FranchiseRow from '../franchiseRow';
 
 const ModalFranchise = ({ isOpen, toggle, setFranchiseName, setFranchiseId, all }) => {
@@ -14,13 +14,12 @@ const ModalFranchise = ({ isOpen, toggle, setFranchiseName, setFranchiseId, all 
 
     const GetFranchises = async () => {
         setLoading(true)
-        await axios.get(UrlNodeServer.franchisesDir.franchises, {
+        await axios.get(UrlNodeServer.ptosVtaDir.ptosVta, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('user-token')
             },
             params: {
-                query: searchText,
-                limit: true
+                query: searchText
             }
         }).then(res => {
             const response = res.data
@@ -41,7 +40,7 @@ const ModalFranchise = ({ isOpen, toggle, setFranchiseName, setFranchiseId, all 
     }, [isOpen, doSearch])
 
     return (
-        <Modal isOpen={isOpen} toggle={toggle}>
+        <Modal isOpen={isOpen} toggle={toggle} size="lg">
             <ModalHeader>
                 Franquicias
             </ModalHeader>
@@ -59,7 +58,7 @@ const ModalFranchise = ({ isOpen, toggle, setFranchiseName, setFranchiseId, all 
                     <Row>
                         <Col>
                             <ListadoTable
-                                titulos={["Franquicia", ""]}>
+                                titulos={["Franquicia", "Razón Social", ""]}>
                                 {
                                     all ?
                                         <tr>

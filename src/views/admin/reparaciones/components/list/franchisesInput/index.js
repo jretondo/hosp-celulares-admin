@@ -7,7 +7,7 @@ const FranchisesInput = ({ franchiseName, setIsOpenModal, isOpenModal, setFranch
     return (<>
         <FormGroup>
             <Label>
-                Franquicia
+                Punto de Venta
             </Label>
             <InputGroup>
                 <Input type="text" value={franchiseName} disabled />

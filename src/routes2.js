@@ -6,7 +6,6 @@ import PuntosVenta from 'views/admin/puntoVenta'
 import Ventas from 'views/admin/ventas'
 import UserAdmin from 'views/admin/userAdmin'
 import Stock from 'views/admin/stock'
-import Franchise from 'views/admin/franquicias'
 import Repairs from 'views/admin/reparaciones'
 import Replacement from 'views/admin/repuestos'
 
@@ -71,14 +70,6 @@ var routes = [
     component: UserAdmin,
     layout: process.env.PUBLIC_URL + "/admin",
     id: 8
-  },
-  {
-    path: "/franquicias",
-    name: "Administración de Franquicias",
-    icon: "ni ni-building text-green",
-    component: Franchise,
-    layout: process.env.PUBLIC_URL + "/admin",
-    id: 10
   },
   {
     path: "/reparaciones",

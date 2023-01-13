@@ -61,7 +61,7 @@ const RepairsFilter = ({ fromDate, setFromDate, toDate, setToDate, repairState, 
                             <Label>
                                 Detalles | Clientes
                             </Label>
-                            <Input type="text" placeHolder="Coloque algún detalle o el nombre de un cliente..." value={searchText} onChange={e => setSearchText(e.target.value)} />
+                            <Input type="text" placeholder="Coloque algún detalle o el nombre de un cliente..." value={searchText} onChange={e => setSearchText(e.target.value)} />
                         </FormGroup>
 
                     </Col>

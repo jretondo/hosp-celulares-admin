@@ -43,7 +43,7 @@ const RepairsForm = ({
             service_cost: serviceCost,
             final_price: finalPrice,
             state: repairState,
-            franchise_id: franchiseId,
+            pv_id: franchiseId,
             id: newForm ? false : idRepair
         }
 
@@ -137,12 +137,20 @@ const RepairsForm = ({
                                     all={false}
                                 />
                             </Col>
-                            <Col md="6">
+                            <Col md="4">
                                 <FormGroup>
                                     <Label>
                                         Cliente
                                     </Label>
                                     <Input type="text" value={client} onChange={(e) => setClient(e.target.value)} required />
+                                </FormGroup>
+                            </Col>
+                            <Col md="2">
+                                <FormGroup>
+                                    <Label>
+                                        Precio final cliente
+                                    </Label>
+                                    <Input min={parseFloat(partCost) + parseFloat(serviceCost)} type="number" value={finalPrice} onChange={e => setFinalPrice(e.target.value)} />
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -174,9 +182,9 @@ const RepairsForm = ({
                             <Col md="3">
                                 <FormGroup>
                                     <Label>
-                                        Precio final cliente
+                                        Ganancia neta
                                     </Label>
-                                    <Input min={parseFloat(partCost) + parseFloat(serviceCost)} type="number" value={finalPrice} onChange={e => setFinalPrice(e.target.value)} />
+                                    <Input type="text" value={"$ " + formatMoney(parseFloat(finalPrice) - (parseFloat(partCost) + parseFloat(serviceCost)))} disabled />
                                 </FormGroup>
                             </Col>
                         </Row>

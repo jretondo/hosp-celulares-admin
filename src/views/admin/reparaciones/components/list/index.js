@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardBody, Col, Row, Spinner } from 'reactstrap';
 import RepairsFilter from './filter';
 import RepairFooter from './footer';
-import RepairsTableList from './tableList';
+import RepairsTableList from './tableList/index.js';
 
 const RepairsList = ({
     setMsgStrong,
