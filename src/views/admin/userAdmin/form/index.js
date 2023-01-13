@@ -107,7 +107,7 @@ const UserForm = ({
                     setApellido(userData.apellido)
                     setUsuario(userData.usuario)
                     setEmail(userData.email)
-                    setPtoVtaSelect(userData.pv)
+                    setPtoVtaSelect(userData.id)
                     document.getElementById("nameTxt").focus()
                 } else {
                     setloading(false)
@@ -143,7 +143,7 @@ const UserForm = ({
                     setPlantPtosVta(
                         resultado.map((item, key) => {
                             return (
-                                <option key={key} value={item.pv}>{item.direccion + " (PV: " + item.pv + ")"}</option>
+                                <option key={key} value={item.id}>{item.direccion + " (PV: " + item.pv + ")"}</option>
                             )
                         })
                     )
