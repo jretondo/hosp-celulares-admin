@@ -14,7 +14,7 @@ const RepairRow = ({ id, item, trigger }) => {
     const [loading, setLoading] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [isOpenModal2, setIsOpenModal2] = useState(false)
-
+    const ptoVta = localStorage.getItem("pv")
     const deleteRepair = async () => {
         swal({
             title: `¿Está seguro de eliminar la repación de ID: ${item.id} ?`,
@@ -86,16 +86,18 @@ const RepairRow = ({ id, item, trigger }) => {
                             <i className="fas fa-ellipsis-v" />
                         </DropdownToggle>
                         <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem
-                                href="#pablo"
-                                onClick={e => {
-                                    e.preventDefault()
-                                    deleteRepair()
-                                }}
-                            >
-                                <i className="fas fa-trash-alt"></i>
-                                Eliminar
-                            </DropdownItem>
+                            {
+                                ptoVta === "null" && <DropdownItem
+                                    href="#pablo"
+                                    onClick={e => {
+                                        e.preventDefault()
+                                        deleteRepair()
+                                    }}
+                                >
+                                    <i className="fas fa-trash-alt"></i>
+                                    Eliminar
+                                </DropdownItem>
+                            }
                             <DropdownItem
                                 href="#pablo"
                                 onClick={e => {

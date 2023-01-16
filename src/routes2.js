@@ -77,7 +77,7 @@ var routes = [
     icon: "ni ni-watch-time text-red",
     component: Repairs,
     layout: process.env.PUBLIC_URL + "/admin",
-    id: 11
+    id: 10
   },
   {
     path: "/repuestos",

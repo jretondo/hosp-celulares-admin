@@ -29,6 +29,8 @@ const RepairsList = ({
     const [dataList, setDataList] = useState([])
     const [loading, setLoading] = useState(false)
 
+    const ptoVta = localStorage.getItem("pv")
+
     const getRepairs = async () => {
         setLoading(true)
         await axios.get(UrlNodeServer.repairsDir.repairs + "/" + page, {
@@ -59,9 +61,41 @@ const RepairsList = ({
         }).finally(() => { setLoading(false) })
     }
 
+    const GetFranchises = async () => {
+        setLoading(true)
+        await axios.get(UrlNodeServer.ptosVtaDir.ptosVta, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('user-token')
+            },
+            params: {
+                query: searchText
+            }
+        }).then(res => {
+            const response = res.data
+            if (response.status === 200) {
+                if (ptoVta !== "null") {
+                    setFranchiseId(response.body.data[0].id)
+                }
+            }
+        }).catch(error => {
+        }).finally(() => { setLoading(false) })
+    }
+
     useEffect(() => {
         getRepairs()
     }, [searchTrigger])
+
+    useEffect(() => {
+        if (ptoVta !== "null") {
+            getRepairs()
+        }
+    }, [franchiseId])
+
+    useEffect(() => {
+        if (ptoVta !== "null") {
+            GetFranchises()
+        }
+    }, [])
 
     return (
         <Card style={{ marginTop: "30px" }}>

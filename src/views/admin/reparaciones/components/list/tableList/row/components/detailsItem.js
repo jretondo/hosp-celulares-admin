@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 
 const DetailsItemRow = ({ setLoading, item, loading, trigger, isOpenModal, setIsOpenModal }) => {
     const [newDetail, setNewDetail] = useState(item.detail)
+    const ptoVta = localStorage.getItem("pv")
 
     const updateDetails = async () => {
         setLoading(true)
@@ -71,7 +72,7 @@ const DetailsItemRow = ({ setLoading, item, loading, trigger, isOpenModal, setIs
             </ModalBody>
             <ModalFooter>
                 <Button color="success"
-                    disabled={loading}
+                    disabled={loading || ptoVta === "null"}
                     onClick={e => {
                         e.preventDefault()
                         updateDetails()

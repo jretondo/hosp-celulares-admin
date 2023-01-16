@@ -49,6 +49,8 @@ const RepairsModule = () => {
     const [dataRepair, setDataRepair] = useState(false)
     const [searchTrigger, setSearchTrigger] = useState(false)
 
+    const ptoVta = localStorage.getItem("pv")
+
     useEffect(() => {
         setCall(!call)
         // eslint-disable-next-line 
@@ -72,7 +74,7 @@ const RepairsModule = () => {
     )
 
     const { loading, error } = UseSecureRoutes(
-        UrlNodeServer.routesDir.sub.clientes,
+        UrlNodeServer.routesDir.sub.reparaciones,
         call
     )
 
@@ -109,11 +111,14 @@ const RepairsModule = () => {
                                         tittle={"Listado"}
                                         active={moduleActive === 0 ? true : false}
                                     />
-                                    <ButtonOpenCollapse
-                                        action={activateForm}
-                                        tittle={"Nueva Reparación"}
-                                        active={moduleActive === 1 ? true : false}
-                                    />
+                                    {
+                                        ptoVta === "null" &&
+                                        <ButtonOpenCollapse
+                                            action={activateForm}
+                                            tittle={"Nueva Reparación"}
+                                            active={moduleActive === 1 ? true : false}
+                                        />
+                                    }
                                     <ButtonOpenCollapse
                                         action={activateReports}
                                         tittle={"Reportes"}
@@ -136,25 +141,27 @@ const RepairsModule = () => {
                                 setIdRepair={setIdRepair}
                             />
                         </Collapse>
-
-                        <Collapse isOpen={moduleActive === 1 ? true : false} >
-                            <RepairsForm
-                                newForm={newForm}
-                                setNewForm={setNewForm}
-                                idRepair={idRepair}
-                                setIdRepair={setIdRepair}
-                                dataRepair={dataRepair}
-                                setActividadStr={setActividadStr}
-                                setNvaActCall={setNvaActCall}
-                                setMsgStrong={setMsgStrong}
-                                setAlertar={setAlertar}
-                                alertar={alertar}
-                                setMsgGralAlert={setMsgGralAlert}
-                                setSuccessAlert={setSuccessAlert}
-                                nvaActCall={nvaActCall}
-                                triggerList={() => setSearchTrigger(!searchTrigger)}
-                            />
-                        </Collapse>
+                        {
+                            ptoVta === "null" &&
+                            <Collapse isOpen={moduleActive === 1 ? true : false} >
+                                <RepairsForm
+                                    newForm={newForm}
+                                    setNewForm={setNewForm}
+                                    idRepair={idRepair}
+                                    setIdRepair={setIdRepair}
+                                    dataRepair={dataRepair}
+                                    setActividadStr={setActividadStr}
+                                    setNvaActCall={setNvaActCall}
+                                    setMsgStrong={setMsgStrong}
+                                    setAlertar={setAlertar}
+                                    alertar={alertar}
+                                    setMsgGralAlert={setMsgGralAlert}
+                                    setSuccessAlert={setSuccessAlert}
+                                    nvaActCall={nvaActCall}
+                                    triggerList={() => setSearchTrigger(!searchTrigger)}
+                                />
+                            </Collapse>
+                        }
                         <Collapse isOpen={moduleActive === 2 ? true : false} >
                             <RepairsReports />
                         </Collapse>

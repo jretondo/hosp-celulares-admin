@@ -31,7 +31,8 @@ const Login = ({ setColorAlert, setMsgAlert, setMsgAlertStrong, setAlertToggle }
   const [esperar, setEsperar] = useState(false)
 
   useEffect(() => {
-    localStorage.removeItem("loginInfo")
+    localStorage.removeItem("pv")
+    localStorage.removeItem("user-token")
     localStorage.removeItem("Nombre")
     localStorage.removeItem("Apellido")
     if (!isLog) {
@@ -75,6 +76,7 @@ const Login = ({ setColorAlert, setMsgAlert, setMsgAlertStrong, setAlertToggle }
           const userData = res.data.body.userData
           localStorage.setItem("Nombre", userData.nombre)
           localStorage.setItem("Apellido", userData.apellido)
+          localStorage.setItem("pv", userData.pv)
           if (provisory) {
             if (rememberCred) {
               localStorage.setItem("savedEmail", user)

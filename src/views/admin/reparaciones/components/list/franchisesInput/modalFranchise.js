@@ -11,6 +11,7 @@ const ModalFranchise = ({ isOpen, toggle, setFranchiseName, setFranchiseId, all 
     const [franchisesArray, setFranchisesArray] = useState([])
     const [searchText, setSearchText] = useState("")
     const [doSearch, setDoSearch] = useState(false)
+    const ptoVta = localStorage.getItem("pv")
 
     const GetFranchises = async () => {
         setLoading(true)
@@ -25,6 +26,10 @@ const ModalFranchise = ({ isOpen, toggle, setFranchiseName, setFranchiseId, all 
             const response = res.data
             if (response.status === 200) {
                 setFranchisesArray(response.body.data)
+                if (ptoVta !== "null") {
+                    setFranchiseName(`${response.body.data[0].direccion} (${response.body.data[0].raz_soc})`)
+                    setFranchiseId(response.body.data[0].id)
+                }
             } else {
                 setFranchisesArray([])
             }
@@ -34,9 +39,7 @@ const ModalFranchise = ({ isOpen, toggle, setFranchiseName, setFranchiseId, all 
     }
 
     useEffect(() => {
-        if (isOpen) {
-            GetFranchises()
-        }
+        GetFranchises()
     }, [isOpen, doSearch])
 
     return (
@@ -60,7 +63,7 @@ const ModalFranchise = ({ isOpen, toggle, setFranchiseName, setFranchiseId, all 
                             <ListadoTable
                                 titulos={["Franquicia", "Razón Social", ""]}>
                                 {
-                                    all ?
+                                    all ? ptoVta === "null" &&
                                         <tr>
                                             <td>
                                                 Todas las franquicias

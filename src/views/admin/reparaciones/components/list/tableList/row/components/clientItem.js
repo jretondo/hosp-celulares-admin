@@ -8,14 +8,16 @@ const ClientItemRow = ({ client, id, trigger }) => {
     const [isToolTipOpen, setIsToolTipOpen] = useState(false)
     const [isChangingClient, setIsChangingClient] = useState(false)
     const [loading, setLoading] = useState(false)
-
+    const ptoVta = localStorage.getItem("pv")
     const actChangeClient = () => {
-        setIsToolTipOpen(false)
-        setIsChangingClient(true)
-        setTimeout(() => {
-            document.getElementById("inpNewClient_" + id).focus()
-            document.getElementById("inpNewClient_" + id).select()
-        }, 300);
+        if (ptoVta === "null") {
+            setIsToolTipOpen(false)
+            setIsChangingClient(true)
+            setTimeout(() => {
+                document.getElementById("inpNewClient_" + id).focus()
+                document.getElementById("inpNewClient_" + id).select()
+            }, 300);
+        }
     }
 
     const updateClient = async () => {
@@ -60,7 +62,7 @@ const ClientItemRow = ({ client, id, trigger }) => {
                     <input id={"inpNewClient_" + id} value={newClient} onChange={e => setNewClient(e.target.value)} onKeyDown={e => changeClient(e)} />
             }
         </td>
-        {!loading && <Tooltip placement="right" isOpen={isToolTipOpen} target={"clientData_" + id} toggle={() => setIsToolTipOpen(!isToolTipOpen)}>
+        {ptoVta === "null" && !loading && <Tooltip placement="right" isOpen={isToolTipOpen} target={"clientData_" + id} toggle={() => setIsToolTipOpen(!isToolTipOpen)}>
             Doble click para cambiarlo
         </Tooltip>}
     </>)

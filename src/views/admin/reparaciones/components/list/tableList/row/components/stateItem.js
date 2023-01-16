@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 const StateItemRow = ({ state, id, trigger }) => {
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [loading, setLoading] = useState(false)
-
+    const ptoVta = localStorage.getItem("pv")
     const changeState = async (e, newState) => {
         e.preventDefault()
         setLoading(true)
@@ -38,10 +38,12 @@ const StateItemRow = ({ state, id, trigger }) => {
 
     return (<>
         <td style={{ textAlign: "center" }}>
-            <Button onClick={e => {
-                e.preventDefault()
-                setIsOpenModal(true)
-            }}>
+            <Button
+                disabled={ptoVta !== "null"}
+                onClick={e => {
+                    e.preventDefault()
+                    setIsOpenModal(true)
+                }}>
                 {parseInt(state) === 0 ? "Pendiente de Pago" :
                     parseInt(state) === 1 ? "Pago Parcial" : "Totalmente Pago"}
                 {" "}<FiRefreshCcw />

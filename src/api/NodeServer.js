@@ -36,6 +36,7 @@ const stock = host + "/stock"
 const invoices = host + "/invoices"
 const franchises = host + "/franchises"
 const repairs = host + "/repairs"
+const paymentsRepairs = host + "/paymentsRepairs"
 
 const authDir = {
     auth
@@ -154,6 +155,14 @@ const repairsDir = {
     }
 }
 
+const paymentsRepairsDir = {
+    paymentsRepairs,
+    sub: {
+        details: paymentsRepairs + "/details",
+        difference: paymentsRepairs + "/difference"
+    }
+}
+
 const routesDir = {
     routes,
     sub: {
@@ -188,7 +197,8 @@ const UrlNodeServer = {
     stockDir,
     invoicesDir,
     franchisesDir,
-    repairsDir
+    repairsDir,
+    paymentsRepairsDir
 }
 
 export default UrlNodeServer
