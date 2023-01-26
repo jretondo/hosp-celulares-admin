@@ -2,35 +2,33 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Col, Form, FormGroup, Input, Label, Row, Spinner } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
-import PtosVtas from '../../vender/header/ptosVta';
-import UsuariosList from './usersList';
+import PtosVtas from './ptosVta'
 import { BsFileEarmarkPdfFill, BsCardList } from "react-icons/bs";
 import axios from 'axios';
-import UrlNodeServer from '../../../../../../api/NodeServer';
+import UrlNodeServer from '../../../../../api/NodeServer';
 import swal from 'sweetalert';
 import FileSaver from 'file-saver';
 import ProductosFiltro from 'views/admin/stock/components/listaStock/components/header/productos';
 
 const HeaderListaCaja = ({
     setListaCaja,
-    pagina,
     setLoading,
-    actualizar
+    actualizar,
+    setDataProducts
 }) => {
     const hoy1 = (moment(new Date()).format("YYYY-MM-DD"))
     const hoy2 = (moment(new Date()).format("YYYY-MM-DD"))
     const [ptosVta, setPtoVta] = useState({ id: 0 })
     const [ptoVtaList, setPtoVtaList] = useState(<option>No hay puntos de venta relacionados</option>)
-    const [user, setUser] = useState({ id: 0 })
-    const [usersList, setUsersList] = useState(<option>No hay usuarios listados</option>)
     const [desde, setDesde] = useState(hoy1)
     const [hasta, setHasta] = useState(hoy2)
     const [loadingPDF, setLoadingPDF] = useState(false)
+    const [prodId, setProdId] = useState(false)
 
-    const getDataInvoices = async () => {
+    const getReport = async () => {
         setLoading(true)
-        const query = `?userId=${user.id}&ptoVta=${ptosVta.id}&desde=${moment(desde).format("YYYY-MM-DD")}&hasta=${moment(hasta).format("YYYY-MM-DD")}`
-        await axios.get(UrlNodeServer.invoicesDir.sub.cajaList + "/" + pagina + query, {
+        const query = `?fromDate=${moment(desde).format("YYYY-MM-DD")}&toDate=${moment(hasta).format("YYYY-MM-DD")}&pvId=${ptosVta.id}&prodId=${prodId}`
+        await axios.get(UrlNodeServer.reportsDir.sub.products + query, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('user-token')
             }
@@ -39,20 +37,20 @@ const HeaderListaCaja = ({
                 setLoading(false)
                 const status = res.data.status
                 if (status === 200) {
-                    setListaCaja(res.data.body)
+                    setDataProducts(res.data.body.data)
                 } else {
-                    setListaCaja([])
+                    setDataProducts([])
                 }
             })
             .catch(() => {
                 setLoading(false)
-                setListaCaja([])
+                setDataProducts([])
             })
     }
 
     const printPDF = async () => {
         setLoadingPDF(true)
-        const query = `?userId=${user.id}&ptoVta=${ptosVta.id}&desde=${moment(desde).format("YYYY-MM-DD")}&hasta=${moment(hasta).format("YYYY-MM-DD")}`
+        const query = `?fromDate=${moment(desde).format("YYYY-MM-DD")}&toDate=${moment(hasta).format("YYYY-MM-DD")}&pvId=${ptosVta.id}&prodId=${prodId}`
         await axios.get(UrlNodeServer.invoicesDir.sub.cajaListPDF + query, {
             responseType: 'arraybuffer',
             headers: {
@@ -77,14 +75,14 @@ const HeaderListaCaja = ({
     }
 
     useEffect(() => {
-        getDataInvoices()
+        getReport()
         // eslint-disable-next-line
-    }, [pagina, actualizar])
+    }, [actualizar])
 
     return (
         <Form onSubmit={e => {
             e.preventDefault()
-            getDataInvoices()
+            getReport()
         }}>
             <Row>
                 <Col md="8" >
@@ -96,16 +94,14 @@ const HeaderListaCaja = ({
                             ptoVta={ptosVta}
                             colSize={12}
                         />
+
                     </Row>
                     <Row>
-                        <UsuariosList
-                            setUser={setUser}
-                            setUsersList={setUsersList}
-                            user={user}
-                            usersList={usersList}
-                            colSize={4}
+                        <ProductosFiltro
+                            colSize={6}
+                            setProdId={setProdId}
                         />
-                        <Col md="4">
+                        <Col md={3}>
                             <FormGroup>
                                 <Label for="desdeTxtCaja">Desde</Label>
                                 <Input
@@ -117,7 +113,7 @@ const HeaderListaCaja = ({
                                 />
                             </FormGroup>
                         </Col>
-                        <Col md="4">
+                        <Col md={3}>
                             <Label for="desdeTxtCaja">Hasta</Label>
                             <Input
                                 type="date"

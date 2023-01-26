@@ -18,7 +18,6 @@ const PtosVtas = ({
             }
         })
             .then(res => {
-                console.log('res :>> ', res);
                 const respuesta = res.data
                 const status = parseInt(respuesta.status)
                 if (status === 200) {
@@ -37,7 +36,7 @@ const PtosVtas = ({
                                 }
                             }
                             return (
-                                <option value={JSON.stringify(item)} key={key} >{`(P.V.: ${item.pv}) ${item.direccion}`}</option>
+                                <option value={JSON.stringify(item)} key={key + 1} >{`(P.V.: ${item.pv}) ${item.direccion}`}</option>
                             )
                         })
                     )
@@ -57,6 +56,7 @@ const PtosVtas = ({
             <Label for="ptoVtaTxt">Punto de Venta</Label>
             <FormGroup>
                 <Input type="select" id="ptoVtaTxt" onChange={e => setPtoVta(JSON.parse(e.target.value))} value={JSON.stringify(ptoVta)}>
+                    <option value={JSON.stringify({ id: false })} key={0} >{`Todos los Puntos de Venta`}</option>
                     {ptoVtaList}
                 </Input>
             </FormGroup>
