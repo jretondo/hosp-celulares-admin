@@ -2,14 +2,13 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Col, Form, FormGroup, Input, Label, Row, Spinner } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
-import PtosVtas from '../../vender/header/ptosVta';
+import PtosVtas from './ptosVta';
 import UsuariosList from './usersList';
 import { BsFileEarmarkPdfFill, BsCardList } from "react-icons/bs";
 import axios from 'axios';
 import UrlNodeServer from '../../../../../../api/NodeServer';
 import swal from 'sweetalert';
 import FileSaver from 'file-saver';
-import ProductosFiltro from 'views/admin/stock/components/listaStock/components/header/productos';
 
 const HeaderListaCaja = ({
     setListaCaja,

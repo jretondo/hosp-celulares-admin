@@ -63,7 +63,7 @@ const UsuariosList = ({
                                 }
                             }
                             return (
-                                <option value={JSON.stringify(item)} key={key} >{`(Usuario: ${item.usuario}) ${item.nombre} ${item.apellido}`}</option>
+                                <option value={JSON.stringify(item)} key={key + 1} >{`(Usuario: ${item.usuario}) ${item.nombre} ${item.apellido}`}</option>
                             )
                         })
                     )
@@ -78,6 +78,7 @@ const UsuariosList = ({
             <Label for="ptoVtaTxt">Usuarios</Label>
             <FormGroup>
                 <Input type="select" id="ptoVtaTxt" onChange={e => setUser(JSON.parse(e.target.value))} value={JSON.stringify(user)}>
+                    <option value={JSON.stringify({ id: false })} key={0} >{`Todos los usuarios`}</option>
                     {usersList}
                 </Input>
             </FormGroup>
