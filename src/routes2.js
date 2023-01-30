@@ -85,7 +85,8 @@ var routes = [
     icon: "ni ni-settings-gear-65 text-teal",
     component: Replacement,
     layout: process.env.PUBLIC_URL + "/admin",
-    id: 12
+    id: 13
   }
+
 ];
 export default routes;

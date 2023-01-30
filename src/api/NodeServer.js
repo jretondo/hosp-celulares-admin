@@ -38,6 +38,7 @@ const franchises = host + "/franchises"
 const repairs = host + "/repairs"
 const paymentsRepairs = host + "/paymentsRepairs"
 const reports = host + "/reports"
+const parts = host + "/parts"
 
 const authDir = {
     auth
@@ -171,6 +172,15 @@ const reportsDir = {
     }
 }
 
+const partsDir = {
+    parts,
+    sub: {
+        states: parts + "/states",
+        types: parts + "/types",
+        details: parts + "/details"
+    }
+}
+
 const routesDir = {
     routes,
     sub: {
@@ -207,7 +217,8 @@ const UrlNodeServer = {
     franchisesDir,
     repairsDir,
     paymentsRepairsDir,
-    reportsDir
+    reportsDir,
+    partsDir
 }
 
 export default UrlNodeServer
