@@ -28,6 +28,7 @@ const RepairsList = ({
     const [lastPage, setLastPage] = useState(1)
     const [dataList, setDataList] = useState([])
     const [loading, setLoading] = useState(false)
+    const [summarize, setSummarize] = useState([])
 
     const ptoVta = localStorage.getItem("pv")
 
@@ -50,14 +51,18 @@ const RepairsList = ({
                 setRepairsArray(response.body.data)
                 setLastPage(response.body.pagesObj.totalPag)
                 setDataList(response.body.pagesObj)
+                setSummarize(response.body.summarizes)
             } else {
                 setRepairsArray([])
+                setSummarize([])
             }
         }).catch(error => {
             setMsgStrong("hubo un error! ")
             setMsgGralAlert("Error: " + error.msg)
             setSuccessAlert(false)
             setAlertar(!alertar)
+            setSummarize([])
+            setRepairsArray([])
         }).finally(() => { setLoading(false) })
     }
 
@@ -135,6 +140,7 @@ const RepairsList = ({
                                 dataList={dataList}
                                 setLastPage={setLastPage}
                                 trigger={triggerList}
+                                summarize={summarize}
                             />
                         </>
                 }

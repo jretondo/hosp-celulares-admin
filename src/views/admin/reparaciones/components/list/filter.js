@@ -4,7 +4,19 @@ import { Button, Col, Form, FormGroup, Input, InputGroup, InputGroupAddon, Label
 import FranchisesInput from './franchisesInput';
 import ModalFranchise from './franchisesInput/modalFranchise';
 
-const RepairsFilter = ({ fromDate, setFromDate, toDate, setToDate, repairState, setRepairState, franchiseId, setFranchiseId, searchText, setSearchText, trigger }) => {
+const RepairsFilter = ({
+    fromDate,
+    setFromDate,
+    toDate,
+    setToDate,
+    repairState,
+    setRepairState,
+    franchiseId,
+    setFranchiseId,
+    searchText,
+    setSearchText,
+    trigger
+}) => {
     const [franchiseName, setFranchiseName] = useState("Todas las franquicias")
     const [isOpenModal, setIsOpenModal] = useState(false)
 
