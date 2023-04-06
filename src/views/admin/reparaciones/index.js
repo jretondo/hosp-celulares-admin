@@ -50,6 +50,7 @@ const RepairsModule = () => {
     const [searchTrigger, setSearchTrigger] = useState(false)
 
     const ptoVta = localStorage.getItem("pv")
+    const chargeRepair = localStorage.getItem("charge_repairs")
 
     useEffect(() => {
         setCall(!call)
@@ -112,7 +113,7 @@ const RepairsModule = () => {
                                         active={moduleActive === 0 ? true : false}
                                     />
                                     {
-                                        ptoVta === "null" &&
+                                        (ptoVta === "null" || chargeRepair) &&
                                         <ButtonOpenCollapse
                                             action={activateForm}
                                             tittle={"Nueva Reparación"}
@@ -142,7 +143,7 @@ const RepairsModule = () => {
                             />
                         </Collapse>
                         {
-                            ptoVta === "null" &&
+                            (ptoVta === "null" || chargeRepair) &&
                             <Collapse isOpen={moduleActive === 1 ? true : false} >
                                 <RepairsForm
                                     newForm={newForm}

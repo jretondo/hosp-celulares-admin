@@ -20,7 +20,7 @@ const TotalItemsVtas = ({
                 setTituloStr("Total Mercado Pago")
                 break;
             case 2:
-                setTituloStr("Total Dédito")
+                setTituloStr("Total Débito")
                 break;
             case 3:
                 setTituloStr("Total Crédito")

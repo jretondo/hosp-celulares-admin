@@ -56,6 +56,9 @@ class Sidebar extends React.Component {
       headers: { 'Authorization': 'Bearer ' + localStorage.getItem('user-token') }
     })
       .then(res => {
+        if (res.data.body.find(oj => oj.id_permission === 14)) {
+          localStorage.setItem("charge_repairs", true);
+        }
         this.setState({
           data: (
             routes.map((prop, key) => {
@@ -66,6 +69,7 @@ class Sidebar extends React.Component {
               }
 
               const esta = res.data.body.find(check)
+
               if (prop.id === 0) {
                 return (
                   <NavItem key={key}>

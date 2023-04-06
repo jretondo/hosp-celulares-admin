@@ -39,7 +39,7 @@ const PaginationCustom = ({
     const changePage = (e, currentPage) => {
         e.preventDefault()
         if (currentPage !== page) {
-            setPage(page)
+            setPage(currentPage)
             trigger()
         }
     }

@@ -196,7 +196,7 @@ const routesDir = {
         userAdmin: routes + "/userAdmin",
         franquicias: routes + "/franquicias",
         reparaciones: routes + "/reparaciones",
-        repuestos: routes + "/repuestos"
+        repuestos: routes + "/parts"
     }
 }
 

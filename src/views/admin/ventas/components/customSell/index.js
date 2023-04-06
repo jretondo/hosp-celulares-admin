@@ -110,12 +110,7 @@ const CustomSell = ({
                             facturar(data)
                         }
                     } else {
-                        const esCuit = verificadorCuit(ndoc).isCuit
-                        if (esCuit) {
-                            facturar(data)
-                        } else {
-                            swal("Error en el CUIT!", "El CUIT que trata de cargar es inválido! Reviselo.", "error");
-                        }
+                        facturar(data)
                     }
                 } else {
                     facturar(data)

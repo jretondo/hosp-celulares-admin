@@ -63,7 +63,7 @@ const ClientesView = () => {
     )
 
     const { loading, error } = UseSecureRoutes(
-        UrlNodeServer.routesDir.sub.clientes,
+        UrlNodeServer.routesDir.sub.repuestos,
         call
     )
 

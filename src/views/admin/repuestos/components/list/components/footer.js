@@ -10,6 +10,7 @@ const PartsFooterList = ({
     setLastPage,
     trigger
 }) => {
+
     return (<>
         <Row style={{ marginTop: "30px" }}>
             <Col md="12">
