@@ -1,15 +1,18 @@
 import formatMoney from 'Function/NumberFormat';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Col, FormGroup, Input, Label } from 'reactstrap';
+import { Button, Col, FormGroup, Input, InputGroup, InputGroupAddon, Label } from 'reactstrap';
+import CashWithdrawalsDetailsModal from './cashWithdrawalsDetails';
 
 const TotalItemsVtas = ({
     id,
     totalId,
     totalImporte,
-    colSize
+    colSize,
+    cashWithdrawalDetails
 }) => {
     const [totalStr, setTotalStr] = useState("")
     const [tituloStr, setTituloStr] = useState("")
+    const [isOpenDetails, setIsOpenDetails] = useState(false)
 
     const format = useCallback(() => {
         switch (parseInt(totalId)) {
@@ -31,7 +34,15 @@ const TotalItemsVtas = ({
             case 5:
                 setTituloStr("Total Transferencias")
                 break;
-
+            case 6:
+                setTituloStr("Retiros en Efectivo")
+                break;
+            case 7:
+                setTituloStr("Fondo de caja")
+                break;
+            case 8:
+                setTituloStr("Neto de efectivo")
+                break;
             default:
                 setTituloStr("No hay totales para mostrar")
                 break;
@@ -44,13 +55,31 @@ const TotalItemsVtas = ({
         format()
     }, [format])
 
-    return (
+    return (<>
+        <CashWithdrawalsDetailsModal
+            isOpen={isOpenDetails}
+            toggle={() => setIsOpenDetails(!isOpenDetails)}
+            detailsArray={cashWithdrawalDetails ? cashWithdrawalDetails : []}
+        />
         <Col md={colSize} key={id}>
             <FormGroup>
                 <Label>{tituloStr}</Label>
-                <Input type="text" value={"$ " + totalStr} disabled />
+                {
+                    parseInt(totalId) === 6 ? <>
+                        <InputGroup>
+                            <Input style={totalImporte < 0 ? { backgroundColor: "red", color: "white" } : {}} type="text" value={"$ " + totalStr} disabled />
+                            <InputGroupAddon addonType="append"><Button onClick={e => {
+                                e.preventDefault()
+                                setIsOpenDetails(true)
+                            }} color="default">Ver detalle</Button></InputGroupAddon>
+                        </InputGroup>
+                    </> :
+                        <Input style={totalImporte < 0 ? { backgroundColor: "red", color: "white" } : {}} type="text" value={"$ " + totalStr} disabled />
+                }
+
             </FormGroup>
         </Col>
+    </>
     )
 }
 

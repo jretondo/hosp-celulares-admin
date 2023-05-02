@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import TotalItemsVtas from './totalItem';
 
 const FooterListVentas = ({
     listaCaja
 }) => {
     const [totalesPlant, setTotalesPlant] = useState(<></>)
+    const [cashLayOut, setCashLayOut] = useState(<></>)
 
     useEffect(() => {
         try {
@@ -19,8 +20,13 @@ const FooterListVentas = ({
             let credito = 0
             let ctacteRow = <></>
             let ctacte = 0
+            let retiroRow = <></>
+            let netoEfvoRow = <></>
+            let fondoRow = <></>
             const totales = listaCaja.totales
             const totales2 = listaCaja.totales2
+            const totalRetiro = listaCaja.retiroData.total === null ? 0 : listaCaja.retiroData.total
+            console.log('totalRetiro :>> ', totalRetiro);
             if (totales2.length > 0) {
                 totales2.map((item) => {
                     switch (parseInt(item.tipo)) {
@@ -67,7 +73,32 @@ const FooterListVentas = ({
                     }
                 })
             }
+
+            if (totalRetiro !== 0) {
+                if (totalRetiro !== 0) {
+                    retiroRow = <TotalItemsVtas
+                        totalId={6}
+                        totalImporte={-totalRetiro}
+                        colSize={4}
+                        cashWithdrawalDetails={listaCaja.retiroData.data}
+                    />
+                }
+            }
+
+            netoEfvoRow = <TotalItemsVtas
+                totalId={8}
+                totalImporte={efectivo - totalRetiro + parseFloat(localStorage.getItem("lastCashFound"))}
+                colSize={4}
+            />
+            fondoRow = <TotalItemsVtas
+                totalId={7}
+                totalImporte={localStorage.getItem("lastCashFound")}
+                colSize={4}
+            />
+
             if (totales.length > 0) {
+
+
                 if (efectivo !== 0) {
                     efectivoRow = <TotalItemsVtas
                         totalId={0}
@@ -75,6 +106,8 @@ const FooterListVentas = ({
                         colSize={4}
                     />
                 }
+
+
                 if (mercadoPago !== 0) {
                     mercadoPagoRow = <TotalItemsVtas
                         totalId={1}
@@ -110,6 +143,7 @@ const FooterListVentas = ({
                     {creditoRow}
                     {ctacteRow}
                 </>)
+
             } else {
                 setTotalesPlant(
                     <TotalItemsVtas
@@ -118,7 +152,14 @@ const FooterListVentas = ({
                         colSize={6}
                     />
                 )
+                setCashLayOut(<></>)
             }
+            setCashLayOut(<>
+                {efectivoRow}
+                {retiroRow}
+                {fondoRow}
+                {netoEfvoRow}
+            </>)
         } catch (error) {
             console.log('error :>> ', error);
             setTotalesPlant(
@@ -132,9 +173,18 @@ const FooterListVentas = ({
     }, [listaCaja])
 
     return (
-        <Row>
-            {totalesPlant}
-        </Row>
+        <>
+            <Row>
+                {totalesPlant}
+            </Row>
+            <hr />
+            <h2>Detalle del efectivo:</h2>
+            <Row>
+                <Col>
+                    {cashLayOut}
+                </Col>
+            </Row>
+        </>
     )
 }
 

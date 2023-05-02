@@ -36,6 +36,8 @@ const Login = ({ setColorAlert, setMsgAlert, setMsgAlertStrong, setAlertToggle }
     localStorage.removeItem("Nombre")
     localStorage.removeItem("Apellido")
     localStorage.removeItem("charge_repairs")
+    localStorage.removeItem("lastDateCash")
+    localStorage.removeItem("lastCashFound")
     if (!isLog) {
       const emailGuardado = localStorage.getItem("savedEmail")
       if (emailGuardado) {

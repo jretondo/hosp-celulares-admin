@@ -80,7 +80,6 @@ const InvoiceHeader = ({
     }
 
     const lastInvoice = useCallback(async () => {
-        console.log('factFiscBool :>> ', factFiscBool);
         let fiscalBool = "true"
         let tipoFact = tfact
         if (parseInt(factFiscBool) === 0) {
@@ -97,7 +96,6 @@ const InvoiceHeader = ({
                 .then(res => {
                     const response = res.data
                     const status = response.status
-                    console.log('response :>> ', response.body.lastInvoice);
                     if (status === 200) {
                         setNroCbte(parseInt(response.body.lastInvoice) + 1)
                     } else {
@@ -119,7 +117,6 @@ const InvoiceHeader = ({
                     .then(res => {
                         const response = res.data
                         const status = response.status
-                        console.log('response :>> ', response.body.lastInvoice);
                         if (status === 200) {
                             setNroCbte(parseInt(response.body.lastInvoice) + 1)
                         } else {
