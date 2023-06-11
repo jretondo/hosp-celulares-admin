@@ -43,6 +43,9 @@ const TotalItemsVtas = ({
             case 8:
                 setTituloStr("Neto de efectivo")
                 break;
+            case 9:
+                setTituloStr("TOTAL")
+                break;
             default:
                 setTituloStr("No hay totales para mostrar")
                 break;
@@ -63,20 +66,23 @@ const TotalItemsVtas = ({
         />
         <Col md={colSize} key={id}>
             <FormGroup>
-                <Label>{tituloStr}</Label>
+                <Label style={totalId === 9 ? { fontWeight: "bold" } : {}}>{tituloStr}</Label>
                 {
                     parseInt(totalId) === 6 ? <>
                         <InputGroup>
                             <Input style={totalImporte < 0 ? { backgroundColor: "red", color: "white" } : {}} type="text" value={"$ " + totalStr} disabled />
-                            <InputGroupAddon addonType="append"><Button onClick={e => {
-                                e.preventDefault()
-                                setIsOpenDetails(true)
-                            }} color="default">Ver detalle</Button></InputGroupAddon>
+                            <InputGroupAddon addonType="append">
+                                <Button onClick={e => {
+                                    e.preventDefault()
+                                    setIsOpenDetails(true)
+                                }} color="default">Ver detalle</Button>
+                            </InputGroupAddon>
                         </InputGroup>
                     </> :
-                        <Input style={totalImporte < 0 ? { backgroundColor: "red", color: "white" } : {}} type="text" value={"$ " + totalStr} disabled />
+                        parseInt(totalId) === 9 ?
+                            <Input style={totalImporte < 0 ? { backgroundColor: "red", color: "white", fontWeight: "bold", fontSize: "16px" } : { fontWeight: "bold", fontSize: "16px" }} type="text" value={"$ " + totalStr} disabled /> :
+                            <Input style={totalImporte < 0 ? { backgroundColor: "red", color: "white" } : {}} type="text" value={"$ " + totalStr} disabled />
                 }
-
             </FormGroup>
         </Col>
     </>

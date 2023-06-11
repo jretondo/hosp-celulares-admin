@@ -9,6 +9,10 @@ const DetailsItemRow = ({ setLoading, item, loading, trigger, isOpenModal, setIs
     const [newDetail, setNewDetail] = useState(item.detail)
     const ptoVta = localStorage.getItem("pv")
 
+    useEffect(() => {
+        setNewDetail(item.detail)
+    }, [item.id])
+
     const updateDetails = async () => {
         setLoading(true)
         const data = {

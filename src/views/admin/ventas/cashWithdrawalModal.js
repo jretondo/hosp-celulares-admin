@@ -8,11 +8,13 @@ import PtosVtas from '../repuestos/components/form/ptosVta';
 const CashWithdrawalModal = ({ isOpen, toggle }) => {
     const [amount, setAmount] = useState("")
     const [ptoVta, setPtoVta] = useState({ id: false })
+    const [detail, setDetail] = useState("")
 
     const CashWithdrawalRegister = async () => {
         await axios.post(UrlNodeServer.invoicesDir.sub.cashWithdrawal, {
             pvId: ptoVta.id,
-            amount: amount
+            amount: amount,
+            detail: detail
         }, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('user-token')
@@ -31,6 +33,7 @@ const CashWithdrawalModal = ({ isOpen, toggle }) => {
 
     useEffect(() => {
         isOpen && setAmount("")
+        isOpen && setDetail("")
     }, [isOpen])
 
     return (<>
@@ -53,6 +56,12 @@ const CashWithdrawalModal = ({ isOpen, toggle }) => {
                             Monto del retiro:
                         </Label>
                         <Input step={0.01} min={1} type="number" value={amount} onChange={e => setAmount(e.target.value)} required />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>
+                            Detalle:
+                        </Label>
+                        <Input value={detail} onChange={e => setDetail(e.target.value)} />
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>

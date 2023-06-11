@@ -15,7 +15,8 @@ if (process.env.NODE_ENV === "development") {
     host = "https://api-prod.nekoadmin.com.ar/hpc/api"
     publicFiles = "https://api-prod.nekoadmin.com.ar/hpc/static"
 }
-
+host = "https://api-prod.nekoadmin.com.ar/hpc/api"
+publicFiles = "https://api-prod.nekoadmin.com.ar/hpc/static"
 const prodImages = publicFiles + "/images/products/"
 
 const publicFolder = {

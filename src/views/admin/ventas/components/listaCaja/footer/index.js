@@ -23,12 +23,15 @@ const FooterListVentas = ({
             let retiroRow = <></>
             let netoEfvoRow = <></>
             let fondoRow = <></>
+            let totalFinal = 0
+            let totalFinalRow = <></>
             const totales = listaCaja.totales
             const totales2 = listaCaja.totales2
             const totalRetiro = listaCaja.retiroData.total === null ? 0 : listaCaja.retiroData.total
-            console.log('totalRetiro :>> ', totalRetiro);
+
             if (totales2.length > 0) {
                 totales2.map((item) => {
+                    totalFinal = totalFinal + item.SUMA
                     switch (parseInt(item.tipo)) {
                         case 0:
                             efectivo = efectivo + parseFloat(item.SUMA)
@@ -50,8 +53,10 @@ const FooterListVentas = ({
                     }
                 })
             }
+
             if (totales.length > 0) {
                 totales.map((item) => {
+                    totalFinal = totalFinal + item.SUMA
                     switch (parseInt(item.forma_pago)) {
                         case 0:
                             efectivo = efectivo + parseFloat(item.SUMA)
@@ -90,6 +95,7 @@ const FooterListVentas = ({
                 totalImporte={efectivo - totalRetiro + parseFloat(localStorage.getItem("lastCashFound"))}
                 colSize={4}
             />
+
             fondoRow = <TotalItemsVtas
                 totalId={7}
                 totalImporte={localStorage.getItem("lastCashFound")}
@@ -97,8 +103,6 @@ const FooterListVentas = ({
             />
 
             if (totales.length > 0) {
-
-
                 if (efectivo !== 0) {
                     efectivoRow = <TotalItemsVtas
                         totalId={0}
@@ -106,8 +110,6 @@ const FooterListVentas = ({
                         colSize={4}
                     />
                 }
-
-
                 if (mercadoPago !== 0) {
                     mercadoPagoRow = <TotalItemsVtas
                         totalId={1}
@@ -136,12 +138,18 @@ const FooterListVentas = ({
                         colSize={4}
                     />
                 }
+                totalFinalRow = <TotalItemsVtas
+                    totalId={9}
+                    totalImporte={totalFinal}
+                    colSize={4}
+                />
                 setTotalesPlant(<>
                     {efectivoRow}
                     {mercadoPagoRow}
                     {debitoRow}
                     {creditoRow}
                     {ctacteRow}
+                    {totalFinalRow}
                 </>)
 
             } else {

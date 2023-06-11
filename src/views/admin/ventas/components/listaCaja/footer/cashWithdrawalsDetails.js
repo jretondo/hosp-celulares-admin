@@ -12,12 +12,13 @@ const CashWithdrawalsDetailsModal = ({ isOpen, toggle, detailsArray }) => {
                 Detalles de los retiros de efectivo
             </ModalHeader>
             <ModalBody>
-                <ListadoTable titulos={["Horario", "Monto"]}>
+                <ListadoTable titulos={["Horario", "Detalle", "Monto"]}>
                     {detailsArray.length > 0 && <>
                         {detailsArray.map((item, key) => {
 
-                            return (<tr>
+                            return (<tr key={key}>
                                 <td>{moment(item.date_time).format("DD/MM/YY H:mm:ss") + " hs"}</td>
+                                <td>{item.detail}</td>
                                 <td>$ {formatMoney(item.amount)}</td>
                             </tr>)
                         })}

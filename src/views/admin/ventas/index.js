@@ -85,38 +85,26 @@ const VentasModule = () => {
     const getCashFound = async () => {
         const today = moment(new Date()).format("YYYY-MM-DD")
         let createNewCashFound = false
-        if (localStorage.getItem("lastDateCash")) {
-            try {
-                const lastCashDate = moment(Date(localStorage.getItem("lastDateCash"))).format("YYYY-MM-DD")
-
-                if (lastCashDate !== today) {
+        await axios.get(UrlNodeServer.invoicesDir.sub.cashFound, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('user-token')
+            }
+        }).then(res => {
+            if (res.data.status === 200) {
+                const cashDateDB = moment(new Date(res.data.body[0].cash_date)).format("YYYY-MM-DD")
+                const cashFoundDB = res.data.body[0].cash_found
+                if (cashDateDB !== today) {
                     createNewCashFound = true
+                } else {
+                    localStorage.setItem("lastDateCash", cashDateDB)
+                    localStorage.setItem("lastCashFound", cashFoundDB)
                 }
-            } catch (error) {
+            } else {
                 createNewCashFound = true
             }
-        } else {
-            await axios.get(UrlNodeServer.invoicesDir.sub.cashFound, {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('user-token')
-                }
-            }).then(res => {
-                if (res.data.status === 200) {
-                    const cashDateDB = moment(new Date(res.data.body[0].cash_date)).format("YYYY-MM-DD")
-                    const cashFoundDB = res.data.body[0].cash_found
-                    if (cashDateDB !== today) {
-                        createNewCashFound = true
-                    } else {
-                        localStorage.setItem("lastDateCash", cashDateDB)
-                        localStorage.setItem("lastCashFound", cashFoundDB)
-                    }
-                } else {
-                    createNewCashFound = true
-                }
-            }).catch(() => {
-                createNewCashFound = true
-            })
-        }
+        }).catch(() => {
+            createNewCashFound = true
+        })
         if (createNewCashFound) {
             swal("No posee fondo de caja!", "Es obligatorio poseer fondo de caja para poder vender!", "warning");
             setCashFoundModal(true)
