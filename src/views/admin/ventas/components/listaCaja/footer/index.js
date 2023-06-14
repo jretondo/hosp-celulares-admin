@@ -31,7 +31,6 @@ const FooterListVentas = ({
 
             if (totales2.length > 0) {
                 totales2.map((item) => {
-                    totalFinal = totalFinal + item.SUMA
                     switch (parseInt(item.tipo)) {
                         case 0:
                             efectivo = efectivo + parseFloat(item.SUMA)
